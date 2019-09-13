@@ -16,6 +16,12 @@ const (
 	maxValidIndexalue    = int(0x80000000 - 1)
 )
 
+const (
+	DefaultBech32MainPrefix   = "panacea"
+	DefaultCoinType           = 371
+	DefaultFullFundraiserPath = "44'/371'/0'/0/0"
+)
+
 var cdc *codec.Codec
 
 func init() {
@@ -31,6 +37,27 @@ type Server struct {
 	Version string `yaml:"version,omitempty"`
 	Commit  string `yaml:"commit,omitempty"`
 	Branch  string `yaml:"branch,omitempty"`
+
+	Bech32MainPrefix   string
+	CoinType           uint32
+	FullFundraiserPath string
+}
+
+func (s *Server) SetSdkConfig() {
+	Bech32PrefixAccAddr := s.Bech32MainPrefix
+	Bech32PrefixAccPub := s.Bech32MainPrefix + sdk.PrefixPublic
+	Bech32PrefixValAddr := s.Bech32MainPrefix + sdk.PrefixValidator + sdk.PrefixOperator
+	Bech32PrefixValPub := s.Bech32MainPrefix + sdk.PrefixValidator + sdk.PrefixOperator + sdk.PrefixPublic
+	Bech32PrefixConsAddr := s.Bech32MainPrefix + sdk.PrefixValidator + sdk.PrefixConsensus
+	Bech32PrefixConsPub := s.Bech32MainPrefix + sdk.PrefixValidator + sdk.PrefixConsensus + sdk.PrefixPublic
+
+	config := sdk.GetConfig()
+	config.SetBech32PrefixForAccount(Bech32PrefixAccAddr, Bech32PrefixAccPub)
+	config.SetBech32PrefixForValidator(Bech32PrefixValAddr, Bech32PrefixValPub)
+	config.SetBech32PrefixForConsensusNode(Bech32PrefixConsAddr, Bech32PrefixConsPub)
+	config.SetCoinType(s.CoinType)
+	config.SetFullFundraiserPath(s.FullFundraiserPath)
+	config.Seal()
 }
 
 // Router returns the router

@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jackzampolin/keyserver/api"
+	"github.com/medibloc/keyserver/api"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	yaml "gopkg.in/yaml.v2"
@@ -36,9 +36,12 @@ var configCmd = &cobra.Command{
 		}
 
 		s := api.Server{
-			Port:   3000,
-			KeyDir: fmt.Sprintf("%s/.keyserver", home),
-			Node:   "http://localhost:26657",
+			Port:               3000,
+			KeyDir:             fmt.Sprintf("%s/.keyserver", home),
+			Node:               "http://localhost:26657",
+			Bech32MainPrefix:   api.DefaultBech32MainPrefix,
+			CoinType:           api.DefaultCoinType,
+			FullFundraiserPath: api.DefaultFullFundraiserPath,
 		}
 
 		if _, err := os.Stat(s.KeyDir); os.IsNotExist(err) {
