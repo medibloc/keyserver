@@ -53,3 +53,8 @@ In another window, generate the transaction to sign, sign it and broadcast:
 {"height":"0","txhash":"BA7D9E1029E2896A909D4FC33B1BE2AEEF7EC467CF30BDD564B2AF94EFC579CB"}
 > panaceacli q tx BA7D9E1029E2896A909D4FC33B1BE2AEEF7EC467CF30BDD564B2AF94EFC579CB
 ```
+
+When offline, transaction gas can be set manually:
+```
+> keyserver tx bank send $(keyserver keys show ggomma | jq -r .address) $(keyserver keys show min | jq -r .address) 10000umed testing "memo" 10umed 1 200000 > test_data/unsigned.json
+```
