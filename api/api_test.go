@@ -15,12 +15,12 @@ import (
 
 const (
 	sMenominc = "marine intact tone element chest certain school village sound guilt nothing deposit cart skirt unveil bulk unit dust peasant cannon faith lyrics swear regret"
-	sAcc      = "cosmos1yv6alpum5r0nmnzkk4esp3cs5d58h8g95mvs50"
-	sAccPub   = "cosmospub1addwnpepqwf7vcxxzylpk4lgghqeyqdv4dwhh0htk5ukskqr7p383t8udzdkgggdxy3"
-	sVal      = "cosmosvaloper1yv6alpum5r0nmnzkk4esp3cs5d58h8g930c9cu"
-	sValPub   = "cosmosvaloperpub1addwnpepqwf7vcxxzylpk4lgghqeyqdv4dwhh0htk5ukskqr7p383t8udzdkgptgttz"
-	sCons     = "cosmosvalcons1yv6alpum5r0nmnzkk4esp3cs5d58h8g99ute5a"
-	sConsPub  = "cosmosvalconspub1addwnpepqwf7vcxxzylpk4lgghqeyqdv4dwhh0htk5ukskqr7p383t8udzdkg8yum0h"
+	sAcc      = "panacea19eny46ann22n88sl48ssem5unhcxnj9gykv2uy"
+	sAccPub   = "panaceapub1addwnpepq2arsjvzasly9xx9p2uv7rkgpudpen9fhsg7wtqm77c7at2t7vc6v79hmtn"
+	sVal      = "panaceavaloper19eny46ann22n88sl48ssem5unhcxnj9gr5v2q6"
+	sValPub   = "panaceavaloperpub1addwnpepq2arsjvzasly9xx9p2uv7rkgpudpen9fhsg7wtqm77c7at2t7vc6v8vey4f"
+	sCons     = "panaceavalcons19eny46ann22n88sl48ssem5unhcxnj9gh8lkvm"
+	sConsPub  = "panaceavalconspub1addwnpepq2arsjvzasly9xx9p2uv7rkgpudpen9fhsg7wtqm77c7at2t7vc6vprd53u"
 
 	testKey     = "jack"
 	testPass    = "123456789"
@@ -114,7 +114,13 @@ func setup(t *testing.T) *httptest.Server {
 	if err != nil {
 		t.Fatal(err)
 	}
-	s := &Server{KeyDir: dir}
+	s := &Server{
+		KeyDir:             dir,
+		Bech32MainPrefix:   DefaultBech32MainPrefix,
+		CoinType:           DefaultCoinType,
+		FullFundraiserPath: DefaultFullFundraiserPath,
+	}
+	s.SetSdkConfig()
 	return httptest.NewServer(s.Router())
 }
 

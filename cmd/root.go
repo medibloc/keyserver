@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jackzampolin/keyserver/api"
+	"github.com/medibloc/keyserver/api"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -88,4 +88,6 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		viper.Unmarshal(&server)
 	}
+
+	server.SetSdkConfig()
 }

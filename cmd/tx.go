@@ -22,7 +22,7 @@ import (
 	"net/http"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/jackzampolin/keyserver/api"
+	"github.com/medibloc/keyserver/api"
 	"github.com/spf13/cobra"
 )
 

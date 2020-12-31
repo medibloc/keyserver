@@ -1,4 +1,4 @@
-module github.com/jackzampolin/keyserver
+module github.com/medibloc/keyserver
 
 go 1.12
 
