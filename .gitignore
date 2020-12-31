@@ -20,3 +20,5 @@ vendor
 
 # Ignore testing directory
 test_data
+
+.idea/

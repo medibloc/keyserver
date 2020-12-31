@@ -1,6 +1,6 @@
 BINARY            = keyserver
-GITHUB_USERNAME   = jackzampolin
-DOCKER_REPO       = quay.io/jackzampolin
+GITHUB_USERNAME   = medibloc
+DOCKER_REPO       = quay.io/medibloc
 VERSION           = v0.1.0
 GOARCH            = amd64
 ARTIFACT_DIR      = build
@@ -77,8 +77,6 @@ docker-run:
 
 # Remove all the built binaries
 clean:
-	cd ${BUILD_DIR} >/dev/null
 	rm -rf ${ARTIFACT_DIR}/*
-	cd - >/dev/null
 
 .PHONY: linux darwin fmt clean
