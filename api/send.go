@@ -21,6 +21,7 @@ type BankSendBody struct {
 	Memo          string         `json:"memo,omitempty"`
 	Fees          string         `json:"fees,omitempty"`
 	GasAdjustment string         `json:"gas_adjustment,omitempty"`
+	Gas           string         `json:"gas,omitempty"`
 }
 
 func (sb BankSendBody) Marshal() []byte {
@@ -73,12 +74,21 @@ func (s *Server) BankSend(w http.ResponseWriter, r *http.Request) {
 		sb.Memo,
 	)
 
-	gas, err := s.SimulateGas(cdc.MustMarshalBinaryLengthPrefixed(stdTx))
-
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write(newError(err).marshal())
-		return
+	var gas uint64
+	if sb.Gas != "" {
+		gas, err = strconv.ParseUint(sb.Gas, 10, 64)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(newError(fmt.Errorf("failed to parse gas %s into uint64", sb.Gas)).marshal())
+			return
+		}
+	} else {
+		gas, err = s.SimulateGas(cdc.MustMarshalBinaryLengthPrefixed(stdTx))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(newError(err).marshal())
+			return
+		}
 	}
 
 	if gas != 0 && sb.GasAdjustment != "" {
